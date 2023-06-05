@@ -4,6 +4,16 @@ import java.util.Scanner;
 
 import JuegoTablero.Tablero.Estado;
 
+/**
+ * Aplicación que impone las reglas del juego de tablero.
+ * 
+ * <ul>
+ * <li> El juego consiste en un tablero de 7x7 casillas, en el que se insertan números del 1 al 7. </li>
+ * <li> Los números se insertan de par en par, mismos que se generan aleatoriamente. </li>
+ * <li> El grupo de números comienza con los valores de 1 y 2. </li>
+ * <li> Las mezclas de números se llevan a cabo después de ingresar el par de números. </li>
+ * 
+*/
 public class App {
     
     public static void main(String[] args) {
@@ -101,7 +111,7 @@ public class App {
 
             tablero.revisarConsecutivos(coordenadas[0][0], coordenadas[0][1]);
             tablero.revisarConsecutivos(coordenadas[1][0], coordenadas[1][1]);
-            
+
             // Se verifica si el juego ha terminado
             if (tablero.getEstado() == Estado.GANADO) {
                 System.out.println("¡Felicidades! Has ganado el juego.");

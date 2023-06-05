@@ -1,31 +1,35 @@
-/*
- * - Existe una matriz de mxm (ahí usaré una lista de colas)
- * - Esta matriz comienza vacía
- * - En las celdas de la matriz se ingresan números de un pool (para ello usaré un árbol binario)
- * - Este pool inicia con los números uno y dos
- * - No se puede ingresar un número en una casilla ocupada
- * - En cada turno, se deben ingresar los dos números del pool
- * - El número que se le da al usuario pertenece al pool, pero es aleatorio
- * - Cuando en las celdas se junta el mismo número de manera consecutiva de
- * forma horizontal o vertical, estos se mezclan
- * - El resultado de la mezcla es que las casillas anteriores se quedan vacías y
- * la última donde se ingresó el número queda en pie, con el mismo valor pero
- * sumado uno (e.g. de 3 veces 3 pasa a una vez el 4)
- * - Al pool de números se agrega el número generado (e.g., si se tiene como
- * selección el 1,2 y 3, y generamos el 4 en el tablero, ahora el 4 también
- * puede colocarse)
- * - Todo será escrito en Java con una interfaz en la línea de comandos
- * 
- */
-
 package JuegoTablero;
 
-import java.util.ArrayList;
-import java.util.ArrayDeque;
 import java.util.List;
 import java.util.Queue;
+import java.util.ArrayList;
+import java.util.ArrayDeque;
 import ArbolBinario.ABEnterosPositivos;
 
+/**
+ * Clase que representa un tablero de mxm casillas con números que se mezclan.
+ * Las restricciones y reglas se listan a continuación:
+ * 
+ * <ul>
+ * <li> El tablero es cuadrado y comienza vacío.</li>
+ * <li> En las celdas de la matriz se ingresan números que se toman de un grupo. </li>
+ * <li> No se puede ingresar un número en una casilla ocupada. </li>
+ * <li> Cuando en las celdas se junta el mismo número de manera consecutiva de
+ *      forma horizontal, vertical, o ambas, estos se mezclan.
+ * 
+ *      El resultado de la mezcla es que las casillas anteriores se quedan vacías y
+ *      la última donde se ingresó el número queda en pie, con el mismo valor pero
+ *      sumado uno (e.g. de 3 veces 3 pasa a una vez el 4). </li>
+ * 
+ * <li> Al grupo de números se agrega el número generado (e.g., si se tiene como
+ *      selección el 1,2 y 3, y generamos el 4 en el tablero, ahora el 4 también
+ *      puede colocarse). </li>
+ * </ul>
+ * 
+ * Para representar el tablero, se emplea una lista de colas, mismas que almacenan objetos de casillas.
+ * 
+ * Para representar el grupo de números, se emplea un árbol binario.
+ */
 public class Tablero {
 
     private class Casilla {
@@ -439,6 +443,15 @@ public class Tablero {
      * <p>
      * Si hay elementos consecutivos, se mezclan y se revisa de nuevo la fila y columna,
      * ya que se pueden haber generado nuevos elementos consecutivos.
+     *
+     * Por su parte, el método es de acceso público, pues se tiene la flexibilidad de hacer
+     * la revisión luego de múltiples inserciones, o de hacer la revisión luego de cada inserción.
+     * 
+     * </p>
+     * 
+     * <p>
+     * <b>Nota:</b> Este método no hace revisiones recursivas. Si se generan nuevos elementos consecutivos,
+     * se debe llamar al método de nuevo.
      * </p>
      * 
      * @param x Coordenada x de la casilla.
@@ -458,11 +471,6 @@ public class Tablero {
 
         if (mezclaVertical != null)
             mezclaVertical.ejecutar();
-
-        // Si se hizo una mezcla, se revisa de nuevo la fila y columna,
-        // ya que se pueden haber generado nuevos elementos consecutivos.
-        // revisarConsecutivos(x, y);
-        
 
         // Además, se revisa si el número resultante de la mezcla es mayor al mayor número
         // del grupo de números a escoger. De ser así, debe registrarse en el grupo de números.
